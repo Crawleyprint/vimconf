@@ -23,6 +23,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'surround.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'kien/ctrlp.vim'
+Plugin 'Lokaltog/powerline'
 
 " colorscheme
 Plugin 'altercation/vim-colors-solarized'
