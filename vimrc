@@ -16,13 +16,17 @@ Plugin 'walm/jshint.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'scrooloose/syntastic'
+Plugin 'ahayman/vim-nodejs-complete'
+Plugin 'mattn/emmet-vim'
 
 Plugin 'scrooloose/nerdtree'
 Plugin 'surround.vim'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'kien/ctrlp.vim'
 
 " colorscheme
 Plugin 'altercation/vim-colors-solarized'
+
 
 call vundle#end()
 
@@ -49,7 +53,7 @@ let g:syntastic_javascript_checkers = ['jshint', 'jscs']
 " turn on suggestion list
 set wildmenu
 set wildmode=list:longest
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,docs/*     " macosx/linux
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
 " line numbers and indentation
 set mouse=a
@@ -183,3 +187,26 @@ nnoremap <silent> <F1> :NERDTreeToggle<CR>
 let NERDTreeShowHidden = 1
 " focus nerdtree
 nmap <silent> <leader>m :NERDTreeFocus<CR>
+
+" set ctrlp trigger
+nnoremap <c-t> :CtrlPRoot<CR>
+
+" set ctrlp trigger
+nnoremap <c-t> :CtrlPRoot<CR>
+
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" Set zen coding abbreviation expand key
+let g:user_emmet_expandabbr_key = '<C-o>'
+let g:user_emmet_mode = 'a'
+let g:user_emmet_install_global = 1
+
