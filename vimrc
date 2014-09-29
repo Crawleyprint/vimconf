@@ -26,10 +26,12 @@ Plugin 'surround.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'kien/ctrlp.vim'
 Plugin 'Lokaltog/powerline'
+Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'claco/jasmine.vim'
+Plugin 'Valloric/YouCompleteMe'
 
 " colorscheme
 Plugin 'altercation/vim-colors-solarized'
-
 
 call vundle#end()
 
@@ -37,8 +39,8 @@ call vundle#end()
 ""Syntax and colors
 "********************
 
-filetype plugin indent on
 syntax enable
+filetype plugin on
 
 " Set terminal to 256 colors
 
@@ -53,6 +55,8 @@ let g:syntastic_mode_map={ 'mode': 'active',
                      \ 'passive_filetypes': ['html'] }
 
 let g:syntastic_javascript_checkers = ['jshint', 'jscs']
+let g:syntastic_check_on_open=1
+
 " turn on suggestion list
 set wildmenu
 set wildmode=list:longest
@@ -213,3 +217,12 @@ let g:user_emmet_expandabbr_key = '<C-o>'
 let g:user_emmet_mode = 'a'
 let g:user_emmet_install_global = 1
 
+set omnifunc=syntaxcomplete#Complete
+let g:tern_map_keys=1
+let g:tern_show_argument_hints='on_hold'
+
+" These are the tweaks I apply to YCM's config, you don't need them but they might help.
+" YCM gives you popups and splits by default that some people might not like, so these should tidy it up a bit for you.
+let g:ycm_add_preview_to_completeopt=0
+let g:ycm_confirm_extra_conf=0
+set completeopt-=preview
