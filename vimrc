@@ -13,6 +13,9 @@ Plugin 'moll/vim-node'
 Plugin 'walm/jshint.vim'
 Plugin 'rking/ag.vim'
 
+" Git
+Plugin 'tpope/vim-fugitive'
+
 " JavaScript
 Plugin 'pangloss/vim-javascript'
 Plugin 'jelera/vim-javascript-syntax'
