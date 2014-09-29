@@ -11,6 +11,7 @@ Plugin 'gmarik/Vundle.vim'
 " NODE
 Plugin 'moll/vim-node'
 Plugin 'walm/jshint.vim'
+Plugin 'rking/ag.vim'
 
 " JavaScript
 Plugin 'pangloss/vim-javascript'
