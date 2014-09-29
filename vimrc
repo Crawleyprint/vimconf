@@ -23,7 +23,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'surround.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'kien/ctrlp.vim'
-Plugin 'Lokaltog/powerline'
+Plugin 'bling/vim-airline'
 
 " colorscheme
 Plugin 'altercation/vim-colors-solarized'
@@ -211,3 +211,11 @@ let g:user_emmet_expandabbr_key = '<C-o>'
 let g:user_emmet_mode = 'a'
 let g:user_emmet_install_global = 1
 
+"Use powerline-patched fonts if found
+let g:airline_left_sep='>'
+let g:airline_right_sep='<'
+let g:airline_detect_modified=1
+let g:airline_detect_paste=1
+let g:airline_inactive_collapse=1
+
+let g:airline#extensions#tabline#enabled = 1
