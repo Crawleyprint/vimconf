@@ -19,6 +19,7 @@ Plugin 'jelera/vim-javascript-syntax'
 Plugin 'scrooloose/syntastic'
 Plugin 'ahayman/vim-nodejs-complete'
 Plugin 'mattn/emmet-vim'
+Plugin 'marijnh/tern_for_vim'
 
 Plugin 'scrooloose/nerdtree'
 Plugin 'surround.vim'
