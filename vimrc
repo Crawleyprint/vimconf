@@ -1,4 +1,5 @@
 set nocompatible              " be iMproved, required
+set shell=/bin/bash
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -32,6 +33,7 @@ Plugin 'bling/vim-airline'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'claco/jasmine.vim'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'flazz/vim-colorschemes'
 
 " colorscheme
 Plugin 'altercation/vim-colors-solarized'
@@ -221,15 +223,41 @@ let g:user_emmet_mode = 'a'
 let g:user_emmet_install_global = 1
 
 set omnifunc=syntaxcomplete#Complete
+
 let g:tern_map_keys=1
 let g:tern_show_argument_hints='on_hold'
+
 let g:airline_detect_modified=1
 let g:airline_detect_paste=1
 let g:airline_inactive_collapse=1
+let g:airline_theme='base16'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
+let g:airline#extensions#tabline#show_close_button = 1
+let g:airline#extensions#tabline#close_symbol = 'X'
+
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''
 
 " These are the tweaks I apply to YCM's config, you don't need them but they might help.
 " YCM gives you popups and splits by default that some people might not like, so these should tidy it up a bit for you.
-let g:airline#extensions#tabline#enabled = 1
 let g:ycm_add_preview_to_completeopt=0
 let g:ycm_confirm_extra_conf=0
 set completeopt-=preview
