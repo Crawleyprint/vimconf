@@ -58,8 +58,11 @@ syntax enable
 set t_Co=256
 set background=dark
 
-colorscheme codeschool
-hi vertsplit guibg=#404049
+colorscheme wombat256
+if has('gui_running')
+  colorscheme codeschool
+  hi vertsplit guibg=#404049
+endif
 
 let g:syntastic_mode_map={ 'mode': 'active',
                      \ 'active_filetypes': [],
