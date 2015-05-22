@@ -34,6 +34,11 @@ Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'claco/jasmine.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'Yggdroot/indentLine'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'Raimondi/delimitMate'
+Plugin 'hail2u/vim-css3-syntax'
+Plugin 'ap/vim-css-color'
 
 " colorscheme
 Plugin 'altercation/vim-colors-solarized'
@@ -44,16 +49,17 @@ call vundle#end()
 ""Syntax and colors
 "********************
 
-syntax enable
 filetype plugin on
+syntax enable
 
 " Set terminal to 256 colors
 
 " set colorscheme
 set t_Co=256
 set background=dark
-let g:solarized_termcolors=256
-colorscheme solarized
+
+colorscheme codeschool
+hi vertsplit guibg=#404049
 
 let g:syntastic_mode_map={ 'mode': 'active',
                      \ 'active_filetypes': [],
@@ -132,7 +138,7 @@ set guioptions-=L
 set guioptions-=r
 
 " set gui font
-set guifont=Menlo:h14
+set guifont=Source\ Code\ Pro\ for\ Powerline\ 10
 
 nnoremap K i<CR><Esc>
 
@@ -197,6 +203,8 @@ vnoremap <right> <nop>
 nnoremap <silent> <F1> :NERDTreeToggle<CR>
 " show hidden files
 let NERDTreeShowHidden = 1
+let g:NERDTreeWinPos = "right"
+
 " focus nerdtree
 nmap <silent> <leader>m :NERDTreeFocus<CR>
 
@@ -260,4 +268,12 @@ let g:airline#extensions#tabline#right_alt_sep = ''
 " YCM gives you popups and splits by default that some people might not like, so these should tidy it up a bit for you.
 let g:ycm_add_preview_to_completeopt=0
 let g:ycm_confirm_extra_conf=0
-set completeopt-=preview
+let g:used_javascript_libs = 'angularjs,jquery,react'
+
+set guioptions-=m  "remove menu bar
+set guioptions-=T  "remove toolbar
+set guioptions-=r  "remove right-hand scroll bar
+set guioptions-=L  "remove left-hand scroll bar
+
+set completeopt-=preview                                                                                                                 "BreakLine: Return TRUE if in the middle of {} or () in INSERT mode
+
