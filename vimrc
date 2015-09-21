@@ -8,40 +8,53 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
+Plugin 'junegunn/vim-easy-align'
 
-" NODE
-Plugin 'moll/vim-node'
-Plugin 'walm/jshint.vim'
+" SILVER SURFER, SEARCH PLUGIN
 Plugin 'rking/ag.vim'
 
-" Git
+" GIT
 Plugin 'tpope/vim-fugitive'
 
-" JavaScript
+" HTML
+Plugin 'mattn/emmet-vim'
+
+" JAVASCRIPT
+Plugin 'moll/vim-node'
 Plugin 'pangloss/vim-javascript'
 Plugin 'jelera/vim-javascript-syntax'
-Plugin 'scrooloose/syntastic'
 Plugin 'ahayman/vim-nodejs-complete'
-Plugin 'mattn/emmet-vim'
-Plugin 'marijnh/tern_for_vim'
-
-Plugin 'scrooloose/nerdtree'
-Plugin 'surround.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'kien/ctrlp.vim'
-Plugin 'bling/vim-airline'
+Plugin 'mxw/vim-jsx'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'claco/jasmine.vim'
+Plugin 'JulesWang/css.vim'
+Plugin 'groenewege/vim-less'
+Plugin 'heavenshell/vim-jsdoc'
+
+" SYNTAX CHECKERS
+Plugin 'walm/jshint.vim'
+Plugin 'scrooloose/syntastic'
+
+" CODE COMPLETION
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'marijnh/tern_for_vim'
+
+Plugin 'scrooloose/nerdcommenter'
+
+" LOOK AND FEEL
 Plugin 'flazz/vim-colorschemes'
-Plugin 'Yggdroot/indentLine'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'Raimondi/delimitMate'
+Plugin 'bling/vim-airline'
+Plugin 'altercation/vim-colors-solarized'
+
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'ap/vim-css-color'
 
-" colorscheme
-Plugin 'altercation/vim-colors-solarized'
+" PROJECT NAVIGATION
+Plugin 'scrooloose/nerdtree'
+Plugin 'kien/ctrlp.vim'
+
+" cosmetics
+Plugin 'godlygeek/tabular'
 
 call vundle#end()
 
@@ -58,11 +71,19 @@ syntax enable
 set t_Co=256
 set background=dark
 
-colorscheme wombat256
+colorscheme badwolf
+
 if has('gui_running')
-  colorscheme codeschool
-  hi vertsplit guibg=#404049
+  " set gui font
+  set guifont=Source\ Code\ Pro\ for\ Powerline:h14
+  colorscheme badwolf
 endif
+
+set guioptions-=m  "remove menu bar
+set guioptions-=T  "remove toolbar
+set guioptions-=r  "remove right-hand scroll bar
+set guioptions-=L  "remove left-hand scroll bar
+set lazyredraw
 
 let g:syntastic_mode_map={ 'mode': 'active',
                      \ 'active_filetypes': [],
@@ -109,7 +130,9 @@ set copyindent
 set visualbell
 set cursorline
 set ttyfast
+if !has('nvim')
 set ttymouse=xterm
+endif
 set backspace=indent,eol,start
 set laststatus=2
 set virtualedit=all
@@ -125,6 +148,8 @@ set pt=<f12>
 " set normal split behavior
 set splitbelow
 set splitright
+hi vertsplit guibg=#cfcfcf
+hi StatusLineNC guibg=#cfcfcf
 
 " change mapleader
 let mapleader = ","
@@ -136,17 +161,12 @@ augroup cursorline
   au winleave * setlocal nocursorline
 augroup end
 
-" Remove scrollbars
-set guioptions-=L
-set guioptions-=r
-
-" set gui font
-set guifont=Source\ Code\ Pro\ for\ Powerline\ 10
 
 nnoremap K i<CR><Esc>
 
 " Vim doesn't set a FileType for JSON, so we'll do it manually:
 autocmd BufNewFile,BufReadPost *.json setlocal filetype=javascript.json
+autocmd BufNewFile,BufReadPost *.less.css setlocal filetype=less
 
 " Requires that you have Python v2.6+ installed. (Most *nix systems do.)
 autocmd FileType json let b:vimpipe_command="python -m json.tool"
@@ -177,6 +197,8 @@ vnoremap <C-i> /\v
 " Dismiss search highlight
 nnoremap <leader><space> :noh<cr>
 
+nnoremap <leader>n :TernDef<cr>
+
 " fix vim's idiotic indentation
 vnoremap > ><cr>gv
 vnoremap < <<cr>gv
@@ -187,6 +209,9 @@ vnoremap < <<cr>gv
 "
 "" navigating the splits
 nnoremap <C-h> <C-w>h
+if has('nvim')
+  nnoremap <bs> <C-w>h
+endif
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
@@ -212,10 +237,7 @@ let g:NERDTreeWinPos = "right"
 nmap <silent> <leader>m :NERDTreeFocus<CR>
 
 " set ctrlp trigger
-nnoremap <c-t> :CtrlPRoot<CR>
-
-" set ctrlp trigger
-nnoremap <c-t> :CtrlPRoot<CR>
+nnoremap <c-t> :CtrlP<CR>
 
 if executable('ag')
   " Use Ag over Grep
@@ -223,10 +245,12 @@ if executable('ag')
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
+  let g:ctrlp_max_files=0
 endif
+
+let g:ctrlp_working_path_mode = 0
 
 " Set zen coding abbreviation expand key
 let g:user_emmet_expandabbr_key = '<C-o>'
@@ -252,6 +276,7 @@ let g:airline#extensions#tabline#show_close_button = 1
 let g:airline#extensions#tabline#close_symbol = 'X'
 
 let g:airline#extensions#tabline#buffer_idx_mode = 1
+
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
 nmap <leader>3 <Plug>AirlineSelectTab3
@@ -272,11 +297,6 @@ let g:airline#extensions#tabline#right_alt_sep = ''
 let g:ycm_add_preview_to_completeopt=0
 let g:ycm_confirm_extra_conf=0
 let g:used_javascript_libs = 'angularjs,jquery,react'
-
-set guioptions-=m  "remove menu bar
-set guioptions-=T  "remove toolbar
-set guioptions-=r  "remove right-hand scroll bar
-set guioptions-=L  "remove left-hand scroll bar
 
 set completeopt-=preview                                                                                                                 "BreakLine: Return TRUE if in the middle of {} or () in INSERT mode
 
