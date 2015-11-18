@@ -13,11 +13,12 @@ Plugin 'junegunn/vim-easy-align'
 " SILVER SURFER, SEARCH PLUGIN
 Plugin 'rking/ag.vim'
 
-" GIT
-Plugin 'tpope/vim-fugitive'
+" UNDO MANAGER
+Plugin 'vim-scripts/Gundo'
 
 " HTML
 Plugin 'mattn/emmet-vim'
+Plugin 'juanpabloaj/vim-istanbul'
 
 " JAVASCRIPT
 Plugin 'moll/vim-node'
@@ -56,10 +57,14 @@ Plugin 'kien/ctrlp.vim'
 " cosmetics
 Plugin 'godlygeek/tabular'
 
+" writing
+Plugin 'reedes/vim-pencil'
+Plugin 'junegunn/goyo.vim'
+
 call vundle#end()
 
 "********************
-""Syntax and colors
+""Syntax and colors                                                           t
 "********************
 
 filetype plugin on
@@ -78,6 +83,9 @@ if has('gui_running')
   set guifont=Source\ Code\ Pro\ for\ Powerline:h14
   colorscheme badwolf
 endif
+if &diff
+    colorscheme github
+endif
 
 set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
@@ -87,9 +95,9 @@ set lazyredraw
 
 let g:syntastic_mode_map={ 'mode': 'active',
                      \ 'active_filetypes': [],
-                     \ 'passive_filetypes': ['html'] }
+                     \ 'passive_filetypes': ['html', 'json'] }
 
-let g:syntastic_javascript_checkers = ['jshint', 'jscs']
+let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_check_on_open=1
 
 " turn on suggestion list
@@ -164,6 +172,7 @@ augroup end
 
 nnoremap K i<CR><Esc>
 
+
 " Vim doesn't set a FileType for JSON, so we'll do it manually:
 autocmd BufNewFile,BufReadPost *.json setlocal filetype=javascript.json
 autocmd BufNewFile,BufReadPost *.less.css setlocal filetype=less
@@ -175,14 +184,14 @@ autocmd FileType json let b:vimpipe_command="python -m json.tool"
 autocmd BufWritePre * :%s/\s\+$//e
 
 " Set syntax to jst for ejs files
-autocmd BufNewFile,BufRead *.ejs set filetype=jst
+autocmd BufNewFile,BufRead *.ejs set filetype=jst<Paste>
 
 " Markdown
 autocmd BufRead *.md set ft=markdown
 
-"****************
+"***************
 ""Misc remaps
-"****************
+"***************
 
 "" remap : to ;
 nnoremap ; :
@@ -194,10 +203,6 @@ vnoremap / /\v
 nnoremap <C-i> /\v
 vnoremap <C-i> /\v
 
-" Dismiss search highlight
-nnoremap <leader><space> :noh<cr>
-
-nnoremap <leader>n :TernDef<cr>
 
 " fix vim's idiotic indentation
 vnoremap > ><cr>gv
@@ -232,9 +237,6 @@ nnoremap <silent> <F1> :NERDTreeToggle<CR>
 " show hidden files
 let NERDTreeShowHidden = 1
 let g:NERDTreeWinPos = "right"
-
-" focus nerdtree
-nmap <silent> <leader>m :NERDTreeFocus<CR>
 
 " set ctrlp trigger
 nnoremap <c-t> :CtrlP<CR>
@@ -277,6 +279,23 @@ let g:airline#extensions#tabline#close_symbol = 'X'
 
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 
+" LEADER SHORTCUTS
+
+" focus nerdtree
+nmap <silent> <leader>m :NERDTreeFocus<CR>
+
+" Dismiss search highlight
+nnoremap <leader><space> :noh<cr>
+
+" Go to definition in JavaScript (or, at least, die tryin')
+nnoremap <leader>n :TernDef<cr>
+
+" Open the allmighty Gundo
+nnoremap <leader>g :GundoToggle<CR>
+
+" Toggle NerdTree
+nnoremap <leader>n :NERDTreeToggle<CR>
+
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
 nmap <leader>3 <Plug>AirlineSelectTab3
@@ -298,5 +317,11 @@ let g:ycm_add_preview_to_completeopt=0
 let g:ycm_confirm_extra_conf=0
 let g:used_javascript_libs = 'angularjs,jquery,react'
 
-set completeopt-=preview                                                                                                                 "BreakLine: Return TRUE if in the middle of {} or () in INSERT mode
+set completeopt-=preview "BreakLine: Return TRUE if in the middle of {} or () in INSERT mode
+
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd,md call pencil#init()
+  autocmd FileType text            call pencil#init()
+augroup END
 
